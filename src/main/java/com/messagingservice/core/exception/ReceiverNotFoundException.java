@@ -1,4 +1,4 @@
-package com.example.Messaging.Service.core.exception;
+package com.messagingservice.core.exception;
 
 public class ReceiverNotFoundException extends RuntimeException{
     public ReceiverNotFoundException(String message){

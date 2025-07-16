@@ -1,4 +1,4 @@
-package com.example.Messaging.Service.core.exception;
+package com.messagingservice.core.exception;
 
 public class InvalidCredentialsException extends RuntimeException{
     public InvalidCredentialsException(String message){
