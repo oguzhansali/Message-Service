@@ -8,7 +8,7 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.messagingservice</groupId>
 	<artifactId>Messaging-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Messaging-Service</name>
@@ -96,6 +96,12 @@
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>7.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
