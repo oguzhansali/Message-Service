@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "4dce7b18-6dfe-429c-a82f-025e7e3b447a",
+		"name": "messaging-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37013644"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "userRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oguzhan_sali61\",\r\n  \"password\": \"sali123\",\r\n  \"email\": \"oguzhan_sali@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oguzhan_sali1\",\r\n  \"password\": \"sali123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oguzhan_sali61\",\r\n  \"password\": \"sali123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/oguzhan_sali3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"oguzhan_sali3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "sendMesssage",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"senderUsername\": \"oguzhan_sali44\",\r\n  \"receiverUsername\": \"oguzhan_sali61\",\r\n  \"content\": \"How u doin oguzhan,today?\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sender's messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"senderUsername\": \"oguzhan_sali1\",\r\n  \"receiverUsername\": \"oguzhan_sali2\",\r\n  \"content\": \"Hello Oguz, how are you?\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/messages/sender/oguzhan_sali44",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"sender",
+								"oguzhan_sali44"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Receiver's messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"senderUsername\": \"oguzhan_sali1\",\r\n  \"receiverUsername\": \"oguzhan_sali2\",\r\n  \"content\": \"Hello Oguz, how are you?\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/messages/receiver/oguzhan_sali61",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"receiver",
+								"oguzhan_sali61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMessage",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/messages/6878bf036680b268647fd0d6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"6878bf036680b268647fd0d6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserBlock",
+			"item": [
+				{
+					"name": "blockUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"blockerUsername\": \"oguzhan_sali44\",\r\n  \"blockedUsername\": \"oguzhan_sali61\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/blocks/block",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"blocks",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBlockedUserByBlocker",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali61",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oguzhan_sali1\",\r\n  \"password\": \"sali123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/blocks/blocker/oguzhan_sali44",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"blocks",
+								"blocker",
+								"oguzhan_sali44"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserActivityLog",
+			"item": [
+				{
+					"name": "userActivity",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sali123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "oguzhan_sali44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/activity-logs/oguzhan_sali44",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"activity-logs",
+								"oguzhan_sali44"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
