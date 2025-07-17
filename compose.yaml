@@ -1,9 +1,28 @@
+version: '3.8'
+
 services:
   mongodb:
-    image: 'mongo:latest'
+    image: mongo:latest
+    container_name: messaging-mongo
     environment:
-      - 'MONGO_INITDB_DATABASE=mymessageservisdb'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: mymessageservisdb
     ports:
       - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: messaging-app
+    depends_on:
+      - mongodb
+    ports:
+      - '8080:8080'
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:secret@mongodb:27017/mymessageservisdb?authSource=admin
+    restart: always
+
+volumes:
+  mongo-data:
