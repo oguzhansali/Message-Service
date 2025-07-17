@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/messages")
-@RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
 

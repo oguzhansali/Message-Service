@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class UserManager implements UserService {
 
     private final UserRepo userRepo;

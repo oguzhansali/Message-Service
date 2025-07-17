@@ -5,11 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Document(collection = "activity_logs")
 public class ActivityLog {
     private String id;
@@ -31,9 +26,7 @@ public class ActivityLog {
     }
 
     public ActivityLog() {
-
     }
-
 
     public String getId() {
         return id;

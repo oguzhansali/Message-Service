@@ -2,7 +2,6 @@ package com.messagingservice.dto;
 
 import lombok.Data;
 
-@Data
 public class BlockRequestDTO {
     private String blockerUsername;
     private String blockedUsername;

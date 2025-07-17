@@ -1,7 +1,5 @@
 package com.messagingservice.dto;
 
-import java.util.List;
-
 public class UserResponseDTO {
     private String userId;
     private String username;
