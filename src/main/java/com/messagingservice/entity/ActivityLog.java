@@ -1,6 +1,5 @@
 package com.messagingservice.entity;
 
-import com.mongodb.connection.ProxySettings;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 

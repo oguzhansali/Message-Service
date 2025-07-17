@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface  UserRepo extends MongoRepository<User,String> {
-    Optional<User> findByUsername(String username);//Login için
-    boolean existsByUsername(String username);//Kayıt olurken kontrol
+    Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
 
 }
