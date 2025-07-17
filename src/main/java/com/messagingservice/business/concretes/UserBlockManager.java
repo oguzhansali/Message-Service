@@ -33,7 +33,7 @@ public class UserBlockManager implements UserBlockService {
     public UserBlock blockUser(String blockerUsername, String blockedUsername) {
         // Prevent users from blocking themselves
         if (blockerUsername.equalsIgnoreCase(blockedUsername)) {
-            logger.warn("The user tried to block herself: {}");
+            logger.warn("The user tried to block herself: {}",blockerUsername);
             throw new UserCannotBlockThemselfException(CustomExceptionMessage.USER_CANNOT_BLOCK_THEMSELF);
         }
         // Verify that the blocker user exists
@@ -47,7 +47,7 @@ public class UserBlockManager implements UserBlockService {
                 blockerUsername.trim(), blockedUsername.trim());
 
         if (alreadyBlocked) {
-            logger.info("User {} has already blocked user {}");
+            logger.info("User {} has already blocked user {}", blockerUsername, blockedUsername);
             throw new UserAlreadyBlockedException(CustomExceptionMessage.USER_ALREADY_BLOCKED);
         }
 
@@ -57,7 +57,7 @@ public class UserBlockManager implements UserBlockService {
         userBlock.setBlockedUsername(blockedUsername);
 
         userBlockRepo.save(userBlock);
-        logger.info("User {} -> Successfully blocked user {}");
+        logger.info("User {} -> Successfully blocked user {}", blockerUsername, blockedUsername);
 
         return userBlock;
     }
