@@ -29,7 +29,6 @@ public class MessageController {
                 "message", "Message sent successfully",
                 "createdMessage",message
         ));
-
     }
 
     //Retrieves all messages sent by a specific user.
@@ -50,7 +49,9 @@ public class MessageController {
     @DeleteMapping("/{messageId}")
     public ResponseEntity<?>deleteMessage(@PathVariable String messageId){
         messageService.deleteMessageById(messageId);
-       return ResponseEntity.ok().build();
+       return ResponseEntity.ok(Map.of(
+               "message", "Message deleted successfully"
+       ));
     }
 
 }
