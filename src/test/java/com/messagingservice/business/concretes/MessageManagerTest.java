@@ -1,6 +1,7 @@
 package com.messagingservice.business.concretes;
 import com.messagingservice.business.abstracts.UserBlockService;
 import com.messagingservice.core.config.GlobalExceptionHandler;
+import com.messagingservice.core.exception.HaveBeenBlockedException;
 import com.messagingservice.core.exception.ReceiverNotFoundException;
 import com.messagingservice.core.exception.SenderNotFoundException;
 import com.messagingservice.dao.MessageRepo;
@@ -44,7 +45,7 @@ public class MessageManagerTest {
     }
 
     @Test
-    void sendMessage_shouldThrowSenderNotFound() {
+    void sendMessageShouldThrowSenderNotFound() {
         MessageRequestDTO dto = new MessageRequestDTO("unknown", "receiver", "Hi");
         when(userRepo.findByUsername("unknown")).thenReturn(Optional.empty());
 
@@ -52,7 +53,7 @@ public class MessageManagerTest {
     }
 
     @Test
-    void sendMessage_shouldThrowReceiverNotFound() {
+    void sendMessageShouldThrowReceiverNotFound() {
         MessageRequestDTO dto = new MessageRequestDTO("sender", "unknown", "Hi");
         when(userRepo.findByUsername("sender")).thenReturn(Optional.of(new User()));
         when(userRepo.findByUsername("unknown")).thenReturn(Optional.empty());
@@ -60,23 +61,23 @@ public class MessageManagerTest {
         assertThrows(ReceiverNotFoundException.class, () -> messageManager.sendMessage(dto));
     }
 
-//    @Test
-//    public void sendMessage_shouldThrowBlockedException() {
-//        MessageRequestDTO dto = new MessageRequestDTO("sender", "receiver", "Blocked Message");
-//        User sender = new User();
-//        sender.setUsername("sender");
-//        User receiver = new User();
-//        receiver.setUsername("receiver");
-//
-//        when(userRepo.findByUsername("sender")).thenReturn(Optional.of(sender));
-//        when(userRepo.findByUsername("receiver")).thenReturn(Optional.of(receiver));
-//        when(userBlockService.isBlocked("sender", "receiver")).thenReturn(true);
-//
-//        assertThrows(HaveBeenBlockedException.class, () -> messageManager.sendMessage(dto));
-//    }
+    @Test
+    public void sendMessageShouldThrowBlockedException() {
+        MessageRequestDTO dto = new MessageRequestDTO("sender", "receiver", "Blocked Message");
+        User sender = new User();
+        sender.setUsername("sender");
+        User receiver = new User();
+        receiver.setUsername("receiver");
+
+        when(userRepo.findByUsername("sender")).thenReturn(Optional.of(sender));
+        when(userRepo.findByUsername("receiver")).thenReturn(Optional.of(receiver));
+        when(userBlockService.isBlocked("sender", "receiver")).thenReturn(true);
+
+        assertThrows(HaveBeenBlockedException.class, () -> messageManager.sendMessage(dto));
+    }
 
     @Test
-    void sendMessage_shouldSucceed() {
+    void sendMessageShouldSucceed() {
         MessageRequestDTO dto = new MessageRequestDTO("sender", "receiver", "Hello");
         when(userRepo.findByUsername("sender")).thenReturn(Optional.of(new User()));
         when(userRepo.findByUsername("receiver")).thenReturn(Optional.of(new User()));

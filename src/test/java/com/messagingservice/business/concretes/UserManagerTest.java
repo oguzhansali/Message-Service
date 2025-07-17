@@ -42,7 +42,7 @@ public class UserManagerTest {
     private UserManager userManager;
 
     @Test
-    void registerUser_successfully() {
+    void registerUserSuccessfully() {
         User user = new User(null, "oguzhan", "pass123", "mail@mail.com");
         when(userRepo.existsByUsername("oguzhan")).thenReturn(false);
         when(userRepo.save(any(User.class))).thenReturn(user);
@@ -54,7 +54,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void registerUser_alreadyExists_throwsException() {
+    void registerUserAlreadyExistsThrowsException() {
         User user = new User(null, "oguzhan", "pass", "mail@mail.com");
         when(userRepo.existsByUsername("oguzhan")).thenReturn(true);
 
@@ -62,7 +62,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void login_success() {
+    void loginSuccess() {
         User user = new User("1", "oguzhan", new BCryptPasswordEncoder().encode("123456"), "mail");
         when(userRepo.findByUsername("oguzhan")).thenReturn(Optional.of(user));
 
@@ -71,7 +71,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void login_wrongPassword_throwsException() {
+    void loginWrongPasswordThrowsException() {
         User user = new User("1", "oguzhan", new BCryptPasswordEncoder().encode("realpass"), "mail");
         when(userRepo.findByUsername("oguzhan")).thenReturn(Optional.of(user));
 
@@ -79,7 +79,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void getAllUsers_returnsListOfDTOs() {
+    void getAllUsersReturnsListOfDTOs() {
         List<User> users = List.of(
                 new User("1", "oguzhan", "pass", "mail"),
                 new User("2", "mehmet", "pass", "mail2")
@@ -93,7 +93,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void deleteUser_success() {
+    void deleteUserSuccess() {
         User user = new User("1", "oguzhan", "pass", "mail");
         when(userRepo.findByUsername("oguzhan")).thenReturn(Optional.of(user));
 
@@ -103,7 +103,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void deleteUser_notFound_throwsException() {
+    void deleteUserNotFoundThrowsException() {
         when(userRepo.findByUsername("missing")).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userManager.deleteUser("missing"));

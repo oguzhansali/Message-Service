@@ -1,6 +1,7 @@
 package com.messagingservice.business.concretes;
 
 import com.messagingservice.core.exception.BlockerUserNotFoundException;
+import com.messagingservice.core.exception.UserAlreadyBlockedException;
 import com.messagingservice.core.exception.UserToBeBlockedNotFoundException;
 import com.messagingservice.dao.UserBlockRepo;
 import com.messagingservice.dao.UserRepo;
@@ -32,14 +33,14 @@ public class UserBlockManagerTest {
     }
 
     @Test
-    void blockUser_shouldThrowException_whenBlockerUserNotFound() {
+    void blockUserShouldThrowExceptionWhenBlockerUserNotFound() {
         when(userRepo.findByUsername("blocker")).thenReturn(Optional.empty());
         assertThrows(BlockerUserNotFoundException.class,
                 () -> userBlockManager.blockUser("blocker", "blocked"));
     }
 
     @Test
-    void blockUser_shouldThrowException_whenBlockedUserNotFound() {
+    void blockUserShouldThrowExceptionWhenBlockedUserNotFound() {
         when(userRepo.findByUsername("blocker")).thenReturn(Optional.of(new User()));
         when(userRepo.findByUsername("blocked")).thenReturn(Optional.empty());
 
@@ -48,19 +49,18 @@ public class UserBlockManagerTest {
     }
 
     @Test
-    void blockUser_shouldReturnAlreadyBlockedMessage() {
+    void blockUserShouldReturnAlreadyBlockedMessage() {
         when(userRepo.findByUsername("blocker")).thenReturn(Optional.of(new User()));
         when(userRepo.findByUsername("blocked")).thenReturn(Optional.of(new User()));
         when(userBlockRepo.existsByBlockerUsernameIgnoreCaseAndBlockedUsernameIgnoreCase("blocker",
                 "blocked"))
                 .thenReturn(true);
 
-        UserBlock result = userBlockManager.blockUser("blocker", "blocked");
-        assertEquals("User was already blocked.", result);
+        assertThrows(UserAlreadyBlockedException.class, () -> userBlockManager.blockUser("blocker", "blocked"));
     }
 
     @Test
-    void blockUser_shouldBlockSuccessfully() {
+    void blockUserShouldBlockSuccessfully() {
         when(userRepo.findByUsername("blocker")).thenReturn(Optional.of(new User()));
         when(userRepo.findByUsername("blocked")).thenReturn(Optional.of(new User()));
         when(userBlockRepo.existsByBlockerUsernameIgnoreCaseAndBlockedUsernameIgnoreCase("blocker",
@@ -73,7 +73,7 @@ public class UserBlockManagerTest {
     }
 
     @Test
-    void isBlocked_shouldReturnTrueIfExists() {
+    void isBlockedShouldReturnTrueIfExists() {
         when(userBlockRepo.existsByBlockerUsernameIgnoreCaseAndBlockedUsernameIgnoreCase("a",
                 "b"))
                 .thenReturn(true);
@@ -81,7 +81,7 @@ public class UserBlockManagerTest {
     }
 
     @Test
-    void isBlocked_shouldReturnFalseIfNotExists() {
+    void isBlockedShouldReturnFalseIfNotExists() {
         when(userBlockRepo.existsByBlockerUsernameIgnoreCaseAndBlockedUsernameIgnoreCase("a",
                 "b"))
                 .thenReturn(false);
