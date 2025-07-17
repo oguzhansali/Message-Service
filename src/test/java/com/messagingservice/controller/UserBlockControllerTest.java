@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,28 +39,32 @@ public class UserBlockControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void blockUser_shouldReturnSuccessMessage() throws Exception {
+    void blockUserShouldReturnSuccessMessage() throws Exception {
         BlockRequestDTO dto = new BlockRequestDTO("alice", "bob");
 
-        when(userBlockService.blockUser("alice", "bob")).thenReturn(new UserBlock());
+        UserBlock mockBlock = new UserBlock();
+        mockBlock.setId(UUID.randomUUID().toString());
 
-        mockMvc.perform(post("/api/block/user")
+        when(userBlockService.blockUser("alice", "bob")).thenReturn(mockBlock);
+
+        mockMvc.perform(post("/api/blocks/block")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User blocked successfully."));
+                .andExpect(jsonPath("$.message").value("User blocked successfully"))
+                .andExpect(jsonPath("$.blockedUsername").value("bob"))
+                .andExpect(jsonPath("$.blockId").value(mockBlock.getId()));
     }
 
     @Test
-    void getBlockedUsers_shouldReturnList() throws Exception {
+    void getBlockedUsersShouldReturnList() throws Exception {
         List<BlockedUserDTO> dtoList = Arrays.asList(
                 new BlockedUserDTO("bob"),
                 new BlockedUserDTO("charlie")
         );
-
         when(userBlockService.getBlockedUsersByBlocker("alice")).thenReturn(dtoList);
 
-        mockMvc.perform(get("/api/block/alice/blocked-users"))
+        mockMvc.perform(get("/api/blocks/blocker/alice"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].blockedUsername").value("bob"))
                 .andExpect(jsonPath("$[1].blockedUsername").value("charlie"));

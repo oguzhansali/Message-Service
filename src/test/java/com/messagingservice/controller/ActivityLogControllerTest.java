@@ -35,7 +35,7 @@ public class ActivityLogControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void getLogsByUsername_shouldReturnLogs() throws Exception {
+    void getLogsByUsernameShouldReturnLogs() throws Exception {
         ActivityLog log = new ActivityLog();
         log.setUsername("alice");
         log.setAction("LOGIN");

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -40,32 +41,35 @@ public class UserControllerTest {
 
 
     @Test
-    void registerUser_shouldReturnRegisteredUser() throws Exception {
+    void registerUserShouldReturnRegisteredUser() throws Exception {
         User user = new User();
         user.setUsername("oguzhan_sali15");
         user.setPassword("sali123");
-        user.setMail("oguzhan_sali@example.com");
+        user.setEmail("oguzhan_sali@example.com");
+
         when(userService.registerUser(any())).thenReturn(user);
 
         String requestBody = """
                 {
                   "username": "oguzhan_sali15",
                   "password": "sali123",
-                  "mail": "oguzhan_sali@example.com"
+                  "email": "oguzhan_sali@example.com"
                 }
                 """;
 
         mockMvc.perform(post("/api/users/register")
-                .contentType("application/json")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
-                .andExpect(content().json(requestBody))
+                .andExpect(jsonPath("$.message").value("User registered successfully"))
+                .andExpect(jsonPath("$.registeredUser.username").value("oguzhan_sali15"))
+                .andExpect(jsonPath("$.registeredUser.email").value("oguzhan_sali@example.com"))
                 .andDo(print());
 
     }
 
     @Test
-    void registerUser_whenUsernameExists_shouldReturnBadRequest() throws Exception {
+    void registerUserWhenUsernameExistsShouldReturnBadRequest() throws Exception {
         when(userService.registerUser(any()))
                 .thenThrow(new UserAlreadyExistException("Username already in use"));
 
@@ -73,7 +77,7 @@ public class UserControllerTest {
         {
           "username": "existing_user",
           "password": "password123",
-          "mail": "user@example.com"
+          "email": "user@example.com"
         }
         """;
 
@@ -85,11 +89,11 @@ public class UserControllerTest {
     }
 
     @Test
-    void loginUser_withValidCredentials_shouldReturnUser() throws Exception {
+    void loginUserWithValidCredentialsShouldReturnUser() throws Exception {
         User user = new User();
         user.setUsername("oguzhan_sali15");
         user.setPassword("sali123");
-        user.setMail("oguzhan_sali@example.com");
+        user.setEmail("oguzhan_sali@example.com");
 
         when(userService.login("oguzhan_sali15", "sali123")).thenReturn(user);
 
@@ -107,7 +111,7 @@ public class UserControllerTest {
                 .andDo(print());
     }
     @Test
-    void getAllUsers_shouldReturnListOfUsers() throws Exception {
+    void getAllUsersShouldReturnListOfUsers() throws Exception {
         // Arrange
         UserResponseDTO user1 = new UserResponseDTO("1", "oguzhan_sali", "oguzhan@example.com");
         UserResponseDTO user2 = new UserResponseDTO("2", "mehmet_kaya", "mehmet@example.com");
@@ -120,23 +124,23 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].userId").value("1"))
                 .andExpect(jsonPath("$[0].username").value("oguzhan_sali"))
-                .andExpect(jsonPath("$[0].mail").value("oguzhan@example.com"))
+                .andExpect(jsonPath("$[0].email").value("oguzhan@example.com"))
                 .andExpect(jsonPath("$[1].userId").value("2"))
                 .andExpect(jsonPath("$[1].username").value("mehmet_kaya"))
-                .andExpect(jsonPath("$[1].mail").value("mehmet@example.com"))
+                .andExpect(jsonPath("$[1].email").value("mehmet@example.com"))
                 .andDo(print());
     }
     @Test
-    void deleteUser_shouldReturnSuccessMessage() throws Exception {
+    void deleteUserShouldReturnSuccessMessage() throws Exception {
         Mockito.doNothing().when(userService).deleteUser("oguzhan");
 
-        mockMvc.perform(delete("/api/users/oguzhan/delete"))
+        mockMvc.perform(delete("/api/users/oguzhan"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("The user and associated data were deleted successfully.."));
+                .andExpect(jsonPath("$.message").value("User deleted"))
+                .andExpect(jsonPath("$.deletedUser").value("oguzhan"))
+                .andDo(print());
 
         Mockito.verify(userService).deleteUser("oguzhan");
     }
-
-
 
 }
