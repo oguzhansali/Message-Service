@@ -27,7 +27,7 @@ public class MessageController {
         Message message = messageService.sendMessage(messageRequestDTO);
         return ResponseEntity.ok(Map.of(
                 "message", "Message sent successfully",
-                "sentMessage",message
+                "createdMessage",message
         ));
 
     }
