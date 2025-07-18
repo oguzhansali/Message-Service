@@ -9,19 +9,26 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: secret
       MONGO_INITDB_DATABASE: mymessageservisdb
     ports:
-      - '27017:27017'
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --username root --password secret --authenticationDatabase admin --eval 'db.adminCommand(\"ping\")' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
     container_name: messaging-app
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     ports:
-      - '8080:8080'
+      - "8080:8080"
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://root:secret@mongodb:27017/mymessageservisdb?authSource=admin
+      SPRING_APPLICATION_NAME: Messaging-Service
     restart: always
 
 volumes:
